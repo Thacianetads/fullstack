@@ -78,7 +78,6 @@ O banco MySQL estará rodando na porta padrão 3306 (internamente para o backend
 ## 🗄 Banco de dados
 
 O banco MySQL será inicializado com um banco chamado `todo`.  
-Caso precise rodar o script SQL manualmente, ele está localizado em `db/init.sql`.
 
 Exemplo de criação da tabela tasks:
 
