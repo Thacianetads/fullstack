@@ -1,0 +1,71 @@
+<main class="todo-container">
+  
+  <!-- Título -->
+  <div class="title">
+    <h1><i class="bi bi-journal-check"></i> Lista de Tarefas</h1>
+  </div>
+
+  <!-- Adicionar nova tarefa -->
+  <div class="add-task">
+    <input [(ngModel)]="newTask.name" placeholder="Título da Tarefa" />
+    <input [(ngModel)]="newTask.description" placeholder="Descrição" />
+    <select [(ngModel)]="newTask.priority">
+      <option disabled selected>Prioridade</option>
+      <option *ngFor="let p of priorities" [value]="p">{{p}}</option>
+    </select>
+    <button (click)="addTask()">
+      <i class="bi bi-plus-lg"></i>
+    </button>
+  </div>
+
+  <!-- Lista de tarefas -->
+  <ul class="task-list">
+    <li *ngFor="let todoItem of todoList; let i = index" [ngClass]="{'completed': todoItem.completed}">
+
+      
+      <input 
+        type="checkbox" 
+        [checked]="todoItem.completed" 
+        (change)="toggleCompleted(i, $event.target.checked)" 
+      />
+
+      <!-- Edição inline -->
+      <ng-container *ngIf="editingTask?.id === todoItem.id && editingTask as taskToEdit; else displayTask">
+
+        <input [(ngModel)]="taskToEdit.name" placeholder="Título" />
+        <input [(ngModel)]="taskToEdit.description" placeholder="Descrição" />
+        <select [(ngModel)]="taskToEdit.priority">
+          <option *ngFor="let p of priorities" [value]="p">{{p}}</option>
+        </select>
+        <button class="btn-green save-btn" (click)="saveEdit()">
+          <i class="bi bi-check-circle"></i>
+        </button>
+        <button class="btn-red cancel-btn" (click)="cancelEdit()">
+          <i class="bi bi-x-circle"></i>
+        </button>
+
+      </ng-container>
+
+      <!-- Exibição padrão -->
+      <ng-template #displayTask>
+        <div class="task-info">
+          <span class="task-title" [class.completed]="todoItem.completed">{{todoItem.name}}</span>
+          <p class="task-desc">{{todoItem.description}}</p>
+          <span class="priority">Prioridade: {{todoItem.priority}}</span>
+        </div>
+        <div class="task-actions">
+          <button class="btn-green edit-btn" (click)="editTask(todoItem)">
+            <i class="bi bi-pencil"></i>
+          </button>
+          <button class="btn-red delete-btn" (click)="deleteTask(todoItem.id)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+      </ng-template>
+
+    </li>
+  </ul>
+
+</main>
+
+<router-outlet />

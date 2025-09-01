@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: todo-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: todo
+      MYSQL_USER: todo_user
+      MYSQL_PASSWORD: todo_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - todonet
+
+  backend:
+    build:
+      context: ./todolist
+    container_name: todo-backend
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/todo
+      SPRING_DATASOURCE_USERNAME: todo_user
+      SPRING_DATASOURCE_PASSWORD: todo_pass
+    ports:
+      - "8080:8080"
+    networks:
+      - todonet
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: todo-frontend
+    depends_on:
+      - backend
+    ports:
+      - "4200:80"
+    networks:
+      - todonet
+
+volumes:
+  mysql-data:
+
+networks:
+  todonet:
