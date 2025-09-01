@@ -54,7 +54,7 @@ Ela possui:
 1. Clone o repositório e entre na pasta do projeto
 
 ```
-git clone <url-do-repositorio>
+git clone https://github.com/Thacianetads/fullstack
 cd <pasta-do-projeto>
 ```
 
