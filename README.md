@@ -69,7 +69,7 @@ O frontend estará disponível em:
 http://localhost:4200
 
 O backend estará disponível em:  
-http://localhost:8080
+http://localhost:8080/tasks
 
 O banco MySQL estará rodando na porta padrão 3306 (internamente para o backend).
 
